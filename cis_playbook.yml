@@ -6,11 +6,13 @@
 -
 
   # Target: where our play will run and options it will run with
-  hosts: linux 
+  strategy: free
+  hosts: all
+  any_errors_fatal: true
 
   # Roles: list of roles to be imported into the play
   roles:
-    - rsyslog 
+    - rsyslog
 
 # Three dots indicate the end of a YAML document
 ...
