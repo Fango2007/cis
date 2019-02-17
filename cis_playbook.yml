@@ -6,9 +6,7 @@
 -
 
   # Target: where our play will run and options it will run with
-  strategy: free
   hosts: all
-  any_errors_fatal: true
 
   # Roles: list of roles to be imported into the play
   roles:

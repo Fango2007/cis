@@ -7,7 +7,6 @@
   when: ansible_hostname == 'centos4' 
 
 - name: Restart the service syslog-ng
-  hosts: syslog
   service:
     name: syslog-ng
     state: restarted 
@@ -17,19 +16,25 @@
   yum:
     name: rsyslog
     state: present
-  when: ansible_hostname <> 'centos4'
+  when: ansible_hostname != 'centos4'
 
 - name: Copy rsyslog configuration for forwarding to syslog-ng
   copy:
     src: rsyslog.conf
     dest: /etc
-  when: ansible_hostname <> 'centos4'
+  when: ansible_hostname != 'centos4'
+
+#- name: Copy rsyslog configuration for forwarding to syslog-ng
+#  copy:
+#    src: 99-forward.conf
+#    dest: /etc/rsyslog.d
+#  when: ansible_hostname != 'centos4'
 
 - name: Restart service rsyslog
   service:
     name: rsyslog
-    state: restarted
-  when: ansible_hostname <> 'centos4'
+    state: started 
+  when: ansible_hostname != 'centos4'
 
 # Three dots indicate the end of a YAML document
 ...
