@@ -1,35 +1,35 @@
 ---
 # tasks file for nginx---
 - name: Copy syslog-ng configuration to /etc/syslog
-  hosts: syslog
   copy:
     src: syslog-ng.conf
     dest: /etc/syslog-ng
+  when: ansible_hostname == 'centos4' 
 
 - name: Restart the service syslog-ng
   hosts: syslog
   service:
     name: syslog-ng
     state: restarted 
+  when: ansible_hostname == 'centos4'
 
 - name: Install rsyslog
-  hosts: linux 
   yum:
     name: rsyslog
     state: present
+  when: ansible_hostname <> 'centos4'
 
 - name: Copy rsyslog configuration for forwarding to syslog-ng
-  hosts: linux
   copy:
     src: rsyslog.conf
     dest: /etc
+  when: ansible_hostname <> 'centos4'
 
 - name: Restart service rsyslog
-  hosts: linux  
   service:
     name: rsyslog
     state: restarted
-
+  when: ansible_hostname <> 'centos4'
 
 # Three dots indicate the end of a YAML document
 ...
