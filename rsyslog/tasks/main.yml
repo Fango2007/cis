@@ -1,0 +1,23 @@
+---
+# tasks file for nginx---
+
+- name: Install rsyslog 
+  yum:
+    name: rsyslog
+    state: present
+  when: ansible_distribution == 'CentOS'
+
+- name: Copy rsyslog configuration for /var/log/secure
+  copy:
+    src: secure.conf
+    dest: /etc/rsyslog.d/
+
+- name: Restart service rsyslog  
+  service:
+    name: rsyslog
+    state: restarted
+  when: ansible_distribution == 'CentOS'
+
+
+# Three dots indicate the end of a YAML document
+...
